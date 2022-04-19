@@ -17,16 +17,14 @@ import net.proteanit.sql.DbUtils;
  */
 public class CadTelefones extends javax.swing.JFrame {
 
-
     public CadTelefones() {
         initComponents();
         setLocationRelativeTo(null);
         ImageIcon icon = new ImageIcon(this.getClass().getResource("/br/com/ListaTelefones/icones/phone 24x24.png"));
         setIconImage(icon.getImage());
-
     }
-    //criando variavel um texto de acordo com o radio boton selecionado
 
+    //criando variavel um texto de acordo com o radio boton selecionado
     public String tipo;
 
     public void salvar(Telefones tel) {
@@ -37,6 +35,7 @@ public class CadTelefones extends javax.swing.JFrame {
         tel.setFone(txt_telefone.getText());
         tel.setCell(txt_celular.getText());
 
+        //Validação para não permitir salvar com campo vazio.
         if (txt_loja.getText().isEmpty() || txt_telefone.getText().isEmpty() || txt_celular.getText().isEmpty()) {
 
             JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
@@ -45,12 +44,12 @@ public class CadTelefones extends javax.swing.JFrame {
             tell.salvar(tel);
 
             JOptionPane.showMessageDialog(null, "Telefone salvo!");
-
         }
+
+        //Limpa os campos apos salvar.
         txt_loja.setText("");
         txt_telefone.setText("");
         txt_celular.setText("");
-
     }
 
     public void salvar_central(TelefoneCentral telCentral) {
@@ -73,25 +72,22 @@ public class CadTelefones extends javax.swing.JFrame {
 
         txt_nome.setText("");
         txt_telefone.setText("");
-
         txt_nome.setEnabled(false);
-        cbx_setor.setEnabled(true);// feito coreção do combobox q não habilitava depois de salvar contato
-
+        // seta combobox pata true depois de salvar contato
+        cbx_setor.setEnabled(true);
     }
 
     public void apagar(Telefones tele) {
-        
+
         if (lbl_id.getText().isEmpty() || txt_loja.getText().isEmpty() || txt_telefone.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Selecione um contato!");
         } else {
             TelefonesDao del = new TelefonesDao();
 
-        tele.setIduser(lbl_id.getText());
+            tele.setIduser(lbl_id.getText());
 
-        del.delete(tele);
+            del.delete(tele);
         }
-        
-
     }
 
     public void apagarCentral(Telefones central) {
@@ -100,12 +96,10 @@ public class CadTelefones extends javax.swing.JFrame {
         } else {
             TelefonesDao delete = new TelefonesDao();
 
-        central.setIduser(lbl_id.getText());
+            central.setIduser(lbl_id.getText());
 
-        delete.deleteCentral(central);
+            delete.deleteCentral(central);
         }
-
-        
     }
 
     public void prencherTabela() {
@@ -119,15 +113,18 @@ public class CadTelefones extends javax.swing.JFrame {
 
         try {
             Connection connection = ModuloConexao.conector();
+
             PreparedStatement comando = connection.prepareStatement(sql.toString());
+
             comando.setString(1, txt_consulta.getText() + "%");
+
             resultado = comando.executeQuery();
+
             tbl_consulta.setModel(DbUtils.resultSetToTableModel(resultado));
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
-
     }
 
     public void preenchertabelaCentral() {
@@ -141,11 +138,14 @@ public class CadTelefones extends javax.swing.JFrame {
 
         try {
             Connection connection = ModuloConexao.conector();
-            PreparedStatement comando = connection.prepareStatement(sql.toString());
-            comando.setString(1, txt_consulta.getText() + "%");
-            resultado = comando.executeQuery();
-            tbl_consulta.setModel(DbUtils.resultSetToTableModel(resultado));
 
+            PreparedStatement comando = connection.prepareStatement(sql.toString());
+
+            comando.setString(1, txt_consulta.getText() + "%");
+
+            resultado = comando.executeQuery();
+
+            tbl_consulta.setModel(DbUtils.resultSetToTableModel(resultado));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
@@ -159,7 +159,6 @@ public class CadTelefones extends javax.swing.JFrame {
         txt_loja.setText(tbl_consulta.getModel().getValueAt(setar, 1).toString());
         txt_telefone.setText(tbl_consulta.getModel().getValueAt(setar, 2).toString());
         txt_celular.setText(tbl_consulta.getModel().getValueAt(setar, 3).toString());
-
     }
 
     public void setarCentral() {
@@ -169,11 +168,9 @@ public class CadTelefones extends javax.swing.JFrame {
         txt_nome.setText(tbl_consulta.getModel().getValueAt(setar, 1).toString());
         txt_telefone.setText(tbl_consulta.getModel().getValueAt(setar, 2).toString());
         cbx_setor.setSelectedItem(tbl_consulta.getModel().getValueAt(setar, 3).toString());
-
     }
 
     public void limpar() {
-
         lbl_id.setText("");
         txt_loja.setText("");
         txt_telefone.setText("");
@@ -201,7 +198,6 @@ public class CadTelefones extends javax.swing.JFrame {
 
             atu.update(contato);
         }
-
     }
 
     public void atualizarCentral(Telefones contatoCentral) {
@@ -217,7 +213,6 @@ public class CadTelefones extends javax.swing.JFrame {
 
             atualiza.updateCentral(contatoCentral);
         }
-
     }
 
     /**
@@ -596,7 +591,6 @@ public class CadTelefones extends javax.swing.JFrame {
             preenchertabelaCentral();
             txt_nome.setEnabled(true);
         }
-
     }//GEN-LAST:event_btn_salvarActionPerformed
 
     private void txt_lojaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_lojaActionPerformed
@@ -611,7 +605,6 @@ public class CadTelefones extends javax.swing.JFrame {
         } else {
             preenchertabelaCentral();
         }
-
     }//GEN-LAST:event_txt_consultaActionPerformed
 
     private void txt_consultaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_consultaKeyReleased
@@ -622,7 +615,6 @@ public class CadTelefones extends javax.swing.JFrame {
         } else {
             preenchertabelaCentral();
         }
-
     }//GEN-LAST:event_txt_consultaKeyReleased
 
     private void tbl_consultaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_consultaMouseClicked
@@ -641,7 +633,6 @@ public class CadTelefones extends javax.swing.JFrame {
             txt_telefone.setEnabled(true);
             cbx_setor.setEnabled(true);
         }
-
     }//GEN-LAST:event_tbl_consultaMouseClicked
 
     private void tbl_consultaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbl_consultaKeyReleased
@@ -656,7 +647,6 @@ public class CadTelefones extends javax.swing.JFrame {
             setarCentral();
             btn_salvar.setEnabled(false);
         }
-
     }//GEN-LAST:event_tbl_consultaKeyReleased
 
     private void txt_consultaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_consultaMouseClicked
@@ -667,7 +657,6 @@ public class CadTelefones extends javax.swing.JFrame {
         } else {
             preenchertabelaCentral();
         }
-
     }//GEN-LAST:event_txt_consultaMouseClicked
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
@@ -688,7 +677,6 @@ public class CadTelefones extends javax.swing.JFrame {
             txt_nome.setEnabled(true);
             txt_telefone.setEnabled(true);
         }
-
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
     private void jToggleButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton4ActionPerformed
@@ -709,7 +697,6 @@ public class CadTelefones extends javax.swing.JFrame {
             txt_nome.setEnabled(true);
             txt_telefone.setEnabled(true);
         }
-
     }//GEN-LAST:event_jToggleButton4ActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
