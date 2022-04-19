@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.ListaTelefones.dao;
 
 import br.com.ListaTelefones.conexaobd.ModuloConexao;
@@ -14,7 +9,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author teste
+ * @author Welder
  */
 public class TelefonesDao {
 
@@ -62,7 +57,6 @@ public class TelefonesDao {
 
             JOptionPane.showMessageDialog(null, e);
         }
-
     }
 
     public void delete(Telefones tel) {
@@ -92,7 +86,6 @@ public class TelefonesDao {
         } else {
 
         }
-
     }
 
     public void deleteCentral(Telefones deletaCentral) {

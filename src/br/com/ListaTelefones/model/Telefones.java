@@ -7,7 +7,7 @@ package br.com.ListaTelefones.model;
 
 /**
  *
- * @author teste
+ * @Welder
  */
 public class Telefones {
     private String iduser;
